@@ -1,0 +1,75 @@
+:root {
+    --bg-dark: #061221;
+    --bg-dark-2: #0a1f35;
+    --glass: rgba(7, 26, 48, 0.78);
+    --line: rgba(81, 205, 255, 0.28);
+    --text-main: #d9ebff;
+}
+
+body.app-bg {
+    min-height: 100vh;
+    color: var(--text-main);
+    background:
+        radial-gradient(circle at 20% 10%, rgba(95, 207, 255, 0.2), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(0, 180, 255, 0.12), transparent 35%),
+        linear-gradient(160deg, var(--bg-dark), var(--bg-dark-2));
+}
+
+.nav-glass {
+    background: rgba(4, 16, 31, 0.78);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+}
+
+.card-glass {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.kpi-card {
+    border: 1px solid rgba(124, 210, 255, 0.25);
+    border-radius: 14px;
+    background: rgba(11, 36, 63, 0.75);
+    color: #eff7ff;
+}
+
+.form-control, .form-select {
+    background: rgba(6, 26, 46, 0.85);
+    border: 1px solid rgba(110, 205, 255, 0.35);
+    color: #f5fbff;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(9, 34, 58, 0.95);
+    border-color: #5fcfff;
+    color: #ffffff;
+    box-shadow: 0 0 0 .2rem rgba(95, 207, 255, 0.15);
+}
+
+.table-dark {
+    --bs-table-bg: rgba(8, 30, 52, 0.8);
+    --bs-table-striped-bg: rgba(12, 42, 73, 0.8);
+    --bs-table-hover-bg: rgba(16, 55, 94, 0.95);
+}
+
+.video-frame {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+}
+
+.btn-info {
+    background-color: #47c8ff;
+    border-color: #47c8ff;
+    color: #05253a;
+}
+
+.btn-info:hover {
+    background-color: #2cb8f2;
+    border-color: #2cb8f2;
+    color: #041a2c;
+}

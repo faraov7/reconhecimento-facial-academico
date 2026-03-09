@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card card-glass p-4">
+            <h4 class="mb-3">Nova turma</h4>
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="action" value="criar_turma">
+                <div>
+                    <label class="form-label">Nome da turma</label>
+                    <input class="form-control" name="nome_turma" required>
+                </div>
+                <div>
+                    <label class="form-label">Disciplina</label>
+                    <input class="form-control" name="disciplina" required>
+                </div>
+                <div>
+                    <label class="form-label">Periodo</label>
+                    <input class="form-control" name="periodo" placeholder="2026.1">
+                </div>
+                <button class="btn btn-info fw-semibold" type="submit">Criar turma</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card card-glass p-4">
+            <h4 class="mb-3">Turmas cadastradas</h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Turma</th>
+                            <th>Disciplina</th>
+                            <th>Periodo</th>
+                            <th>Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in turmas %}
+                        <tr>
+                            <td>{{ t.id }}</td>
+                            <td>{{ t.nome }}</td>
+                            <td>{{ t.disciplina }}</td>
+                            <td>{{ t.periodo or '-' }}</td>
+                            <td class="d-flex flex-wrap gap-2">
+                                <a class="btn btn-sm btn-outline-info" href="{{ url_for('presencas', turma_id=t.id) }}">Vincular</a>
+                                <a class="btn btn-sm btn-success" href="{{ url_for('reconhecimento', turma_id=t.id) }}">Iniciar chamada</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="5" class="text-center text-secondary">Nenhuma turma cadastrada.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if turma_selecionada %}
+<div class="card card-glass p-4 mt-4">
+    <h5 class="mb-3">Vincular alunos - {{ turma_selecionada.nome }} ({{ turma_selecionada.disciplina }})</h5>
+    <form method="post">
+        <input type="hidden" name="action" value="vincular_turma">
+        <input type="hidden" name="turma_id" value="{{ turma_selecionada.id }}">
+        <div class="row g-3">
+            {% for u in usuarios %}
+            <div class="col-md-4 col-sm-6">
+                <label class="p-2 border rounded d-block">
+                    <input type="checkbox" name="usuarios_ids" value="{{ u.id }}"
+                           {% if u.id in vinculados_ids %}checked{% endif %}>
+                    <span class="ms-1">{{ u.nome }} <small class="text-secondary">({{ u.matricula }})</small></span>
+                </label>
+            </div>
+            {% else %}
+            <div class="col-12 text-secondary">Cadastre usuarios para vincular nesta turma.</div>
+            {% endfor %}
+        </div>
+        <button class="btn btn-info mt-3" type="submit">Salvar vinculos</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

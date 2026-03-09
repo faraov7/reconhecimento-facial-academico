@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="p-4 p-lg-5 card-glass mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+            <h1 class="display-6 fw-bold mb-3">Sistema de Reconhecimento Facial Academico</h1>
+            <p class="lead text-light-emphasis mb-0">
+                Plataforma integrada para cadastro, treinamento de embeddings, reconhecimento em tempo real
+                e rastreabilidade completa de acessos para seu TCC.
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <div class="card kpi-card p-3">
+                <small class="text-secondary">Usuarios cadastrados</small>
+                <h2 class="fw-bold text-info mb-0">{{ metricas.total_usuarios }}</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-3">
+    <div class="col-6 col-lg-3">
+        <div class="card kpi-card h-100 p-3">
+            <small>Total de acessos</small>
+            <h3 class="mb-0">{{ metricas.total_acessos }}</h3>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card kpi-card h-100 p-3">
+            <small>Reconhecidos</small>
+            <h3 class="mb-0 text-success">{{ metricas.reconhecidos }}</h3>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card kpi-card h-100 p-3">
+            <small>Desconhecidos</small>
+            <h3 class="mb-0 text-warning">{{ metricas.desconhecidos }}</h3>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card kpi-card h-100 p-3 d-grid">
+            <a class="btn btn-info fw-semibold" href="{{ url_for('reconhecimento') }}">Iniciar camera</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

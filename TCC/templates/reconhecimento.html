@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-xl-8">
+        <div class="card card-glass p-3">
+            <h4 class="mb-3">Reconhecimento em tempo real</h4>
+            {% if turma %}
+            <div class="alert alert-info">
+                Chamada ativa para <strong>{{ turma.nome }}</strong> - {{ turma.disciplina }}
+            </div>
+            {% endif %}
+            <div class="video-frame">
+                <img src="{{ url_for('video_feed', turma_id=turma_id) if turma_id else url_for('video_feed') }}" alt="Video ao vivo" class="img-fluid rounded-3 w-100">
+            </div>
+            <small class="text-secondary mt-2 d-block">
+                O sistema detecta rosto, extrai embedding e compara com a base cadastrada.
+            </small>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card card-glass p-4 h-100">
+            <h5>Fluxo tecnico ativo</h5>
+            <ol class="small text-light-emphasis mb-0">
+                <li>Deteccao facial via OpenCV (Haar Cascade)</li>
+                <li>Extracao de embedding com face_recognition</li>
+                <li>Comparacao por distancia euclidiana</li>
+                <li>Log de status no SQLite (reconhecido/desconhecido)</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

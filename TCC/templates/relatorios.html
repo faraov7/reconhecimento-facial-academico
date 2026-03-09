@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card card-glass p-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <h4 class="mb-0">Relatorio de Reconhecimento</h4>
+                <div class="d-flex gap-2 align-items-center">
+                    <a href="{{ url_for('exportar_csv') }}" class="btn btn-sm btn-outline-info">Exportar CSV</a>
+                    <a href="{{ url_for('exportar_pdf') }}" class="btn btn-sm btn-info text-dark">Exportar PDF</a>
+                    <span class="badge bg-info text-dark">Atualizado em {{ agora.strftime("%d/%m/%Y %H:%M") }}</span>
+                </div>
+            </div>
+            <canvas id="chartAcessos" height="130"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card card-glass p-4 h-100">
+            <h5>Top reconhecidos</h5>
+            <ul class="list-group list-group-flush">
+                {% for u in metricas.top_usuarios %}
+                    <li class="list-group-item bg-transparent text-light d-flex justify-content-between">
+                        <span>{{ u.nome }} <small class="text-secondary">({{ u.matricula }})</small></span>
+                        <strong>{{ u.qtd }}</strong>
+                    </li>
+                {% else %}
+                    <li class="list-group-item bg-transparent text-secondary">Sem dados suficientes.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card card-glass p-4 mt-4">
+    <h5 class="mb-3">Ultimas presencas registradas</h5>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Aluno</th>
+                    <th>Matricula</th>
+                    <th>Turma</th>
+                    <th>Disciplina</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for p in presencas[:100] %}
+                <tr>
+                    <td>{{ p.data }}</td>
+                    <td>{{ p.nome }}</td>
+                    <td>{{ p.matricula }}</td>
+                    <td>{{ p.turma_nome }}</td>
+                    <td>{{ p.disciplina }}</td>
+                    <td><span class="badge bg-success">{{ p.status }}</span></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="6" class="text-center text-secondary">Sem presencas registradas.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.relatorioLabels = {{ labels_json|safe }};
+    window.relatorioReconhecido = {{ reconhecido_json|safe }};
+    window.relatorioDesconhecido = {{ desconhecido_json|safe }};
+</script>
+{% endblock %}
